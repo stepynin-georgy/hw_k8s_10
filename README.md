@@ -77,6 +77,8 @@ spec:
         image:  {{ .Values.image }}:{{ .Values.tag }}
 ```
 
+[deployment.yml](https://github.com/stepynin-georgy/hw_k8s_10/blob/main/deployment.yml)
+
 Создаем service:
 
 ```
@@ -94,6 +96,8 @@ spec:
     port: {{ .Values.service.port }}
     targetPort: {{ .Values.service.targetPort }}
 ```
+
+[service.yml](https://github.com/stepynin-georgy/hw_k8s_10/blob/main/service.yml)
 
 Прописываем переменные для chart:
 
