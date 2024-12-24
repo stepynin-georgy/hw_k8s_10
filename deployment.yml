@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "netology-chart.fullname" . }}
+  labels:
+    app:  {{ include "netology-chart.fullname" . }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ include "netology-chart.fullname" . }}
+  replicas: {{ .Values.repl }}
+  template:
+    metadata:
+      labels:
+        app:  {{ include "netology-chart.fullname" . }}
+    spec:
+      containers:
+      - name:  {{ include "netology-chart.fullname" . }}
+        image:  {{ .Values.image }}:{{ .Values.tag }}
