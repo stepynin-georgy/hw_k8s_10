@@ -27,15 +27,21 @@
 2. Каждый компонент приложения деплоится отдельным deployment’ом или statefulset’ом.
 3. В переменных чарта измените образ приложения для изменения версии.
 
+Helm установлен:
+
 ```
 user@k8s:/opt/hw_k8s_10$ microk8s helm version
 version.BuildInfo{Version:"v3.14.4+unreleased", GitCommit:"1b3a3b6738c9321dc29902be5bb5fbb53c87d22a", GitTreeState:"clean", GoVersion:"go1.21.13"}
 ```
 
+Создаем chart:
+
 ```
 user@k8s:/opt/hw_k8s_10$ sudo microk8s helm create netology-chart
 Creating netology-chart
 ```
+
+Вносим изменения в yaml:
 
 ```
 user@k8s:/opt/hw_k8s_10$ cat netology-chart/Chart.yaml
@@ -46,6 +52,8 @@ type: application
 version: 0.1.0
 appVersion: "1.16.0"
 ```
+
+Создаем deployment для nginx:
 
 ```
 apiVersion: apps/v1
@@ -69,15 +77,7 @@ spec:
         image:  {{ .Values.image }}:{{ .Values.tag }}
 ```
 
-```
-user@k8s:/opt/hw_k8s_10$ cat netology-chart/values.yaml
-image: nginx
-tag: 1.21.0
-repl: 1
-service:
-  port: 80
-  targetPort: 80
-```
+Создаем service:
 
 ```
 apiVersion: v1
@@ -95,7 +95,16 @@ spec:
     targetPort: {{ .Values.service.targetPort }}
 ```
 
+Прописываем переменные для chart:
+
 ```
+user@k8s:/opt/hw_k8s_10$ cat netology-chart/values.yaml
+image: nginx
+tag: 1.21.0
+repl: 1
+service:
+  port: 80
+  targetPort: 80
 user@k8s:/opt/hw_k8s_10$ cat netology-chart/values2.yaml
 image: nginx
 tag: 1.26.2
